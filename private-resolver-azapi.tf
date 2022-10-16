@@ -104,7 +104,7 @@ resource "azapi_resource" "forwarding_rule" {
     properties = {
       domainName          = var.forwarding_rule_domain_name_target
       forwardingRuleState = var.enable_forwarding_rule_set == true ? "Enabled" : "Disabled"
-      targetDnsServers    = var.target_dns_servers_info
+      targetDnsServers    = var.domain_forwarding_dns_servers_info
     }
   })
   depends_on = [

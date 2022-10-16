@@ -17,7 +17,3 @@ output "private_resolver_parent_id" {
   description = "The name of the parent_id"
   value       = azapi_resource.private_resolver.parent_id
 }
-
-output "test_output" {
-  value = azapi_resource.inbound_endpoint
-}

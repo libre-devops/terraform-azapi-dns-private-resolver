@@ -4,6 +4,14 @@ variable "enable_forwarding_rule_set" {
   default     = true
 }
 
+variable "forwarding_rule_domain_name_forwarding_dns_servers_info" {
+  description = "The object info for dns servers for the domain servers info, e.g. the domain you specify in your ruleset, if used."
+  type = list(object({
+    ipAddress = string #Make these optional objects after TF 1.4.x
+    port      = number
+  }))
+}
+
 variable "forwarding_rule_domain_name_target" {
   type        = string
   description = "The name of the domain name the resolver is resolving for"
@@ -75,13 +83,6 @@ variable "tags" {
   default = {
     source = "terraform"
   }
-}
-
-variable "target_dns_servers_info" {
-  type = list(object({
-    ipAddress = string #Make these optional objects after TF 1.4.x
-    port      = number
-  }))
 }
 
 variable "vnet_id" {

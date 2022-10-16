@@ -53,18 +53,18 @@ module "private_resolver" {
   rg_id    = module.rg.rg_id
 
 
-  forwarding_rule_domain_name_target = "libredevops.org."
-  forwarding_rule_name               = "dnspr-fowarding-rule-example"
-  inbound_endpoint_name              = "dnspr-iep-example"
-  outbound_endpoint_name             = "dnspr-oep-example"
-  resolver_name                      = "lbdo-dnspr-01"
-  resolver_vnet_link_name            = "lbdo-dnspr-link"
-  rule_set_name                      = "lbdo-dnspr-rule-set"
-  inbound_endpoint_subnet_id         = element(values(module.network.subnets_ids), 1)
-  outbound_endpoint_subnet_id        = element(values(module.network.subnets_ids), 2)
-  vnet_id                            = module.network.vnet_id
+  inbound_endpoint_name       = "dnspr-iep-example"
+  outbound_endpoint_name      = "dnspr-oep-example"
+  resolver_name               = "lbdo-dnspr-01"
+  resolver_vnet_link_name     = "lbdo-dnspr-link"
+  rule_set_name               = "lbdo-dnspr-rule-set"
+  inbound_endpoint_subnet_id  = element(values(module.network.subnets_ids), 1)
+  outbound_endpoint_subnet_id = element(values(module.network.subnets_ids), 2)
+  vnet_id                     = module.network.vnet_id
 
-  target_dns_servers_info = [
+  forwarding_rule_name               = "dnspr-fowarding-rule-example"
+  forwarding_rule_domain_name_target = "libredevops.org."
+  forwarding_rule_domain_name_forwarding_dns_servers_info = [
     {
       ipAddress = "10.0.1.0"
       port      = 53
