@@ -81,8 +81,6 @@ resource "azapi_resource" "resolver_vnet_link" {
   type      = "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks@2020-04-01-preview"
   name      = var.resolver_vnet_link_name
   parent_id = azapi_resource.rule_set.id
-  tags      = var.tags
-
 
   body = jsonencode({
     properties = {
