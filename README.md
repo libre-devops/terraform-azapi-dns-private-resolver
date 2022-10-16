@@ -1,17 +1,3 @@
-# terraform-azurerm-linux-vm
-This module follows the KISS design pattern compared to other modules in the market.  It does not try to do anything crazy and consider availability sets, scale sets etc, this will create you a VM based on some parameters you give it, nothing more, nothing less
-
-```hcl
-
-provider "azapi" {
-  default_tags = local.tags
-}
-
-provider "azurerm" {
-  features {
-  }
-}
-
 module "rg" {
   source = "registry.terraform.io/libre-devops/rg/azurerm"
 
@@ -68,9 +54,7 @@ module "private_resolver" {
       port      = 53
     }
   ]
-}
-```
-## Requirements
+}## Requirements
 
 | Name | Version |
 |------|---------|
@@ -124,4 +108,3 @@ No modules.
 |------|-------------|
 | <a name="output_private_resolver_id"></a> [private\_resolver\_id](#output\_private\_resolver\_id) | The id of the resolver |
 | <a name="output_private_resolver_name"></a> [private\_resolver\_name](#output\_private\_resolver\_name) | The name of the resolver |
-```
