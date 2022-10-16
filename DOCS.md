@@ -7,7 +7,6 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_azapi"></a> [azapi](#provider\_azapi) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
 
 ## Modules
 
@@ -23,7 +22,6 @@ No modules.
 | [azapi_resource.private_resolver](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
 | [azapi_resource.resolver_vnet_link](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
 | [azapi_resource.rule_set](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azurerm_storage_account.sa](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
 
 ## Inputs
 
