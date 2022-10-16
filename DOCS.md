@@ -8,7 +8,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | >= 1.0.0 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 1.0.0 |
 
 ## Modules
 
@@ -51,4 +51,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_private_resolver_id"></a> [private\_resolver\_id](#output\_private\_resolver\_id) | The id of the resolver |
+| <a name="output_private_resolver_inbound_endpoint_name"></a> [private\_resolver\_inbound\_endpoint\_name](#output\_private\_resolver\_inbound\_endpoint\_name) | The name of the inbound endpoint |
 | <a name="output_private_resolver_name"></a> [private\_resolver\_name](#output\_private\_resolver\_name) | The name of the resolver |
+| <a name="output_private_resolver_parent_id"></a> [private\_resolver\_parent\_id](#output\_private\_resolver\_parent\_id) | The name of the parent\_id |
+| <a name="output_test_output"></a> [test\_output](#output\_test\_output) | n/a |
