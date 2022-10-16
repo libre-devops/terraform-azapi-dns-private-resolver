@@ -22,10 +22,6 @@ variable "inbound_endpoint_name" {
 variable "inbound_endpoint_subnet_id" {
   type        = string
   description = "The subnet ID of for the inbound endpoint to be added to, must not collide with outbound endpoint subnet id"
-  validation {
-    condition     = var.inbound_endpoint_subnet_id == var.outbound_endpoint_subnet_id
-    error_message = "The inbound subnet and outbound subnet cannot be the same."
-  }
 }
 
 variable "location" {
@@ -41,10 +37,6 @@ variable "outbound_endpoint_name" {
 variable "outbound_endpoint_subnet_id" {
   type        = string
   description = "The subnet ID for the NICs which are created with the VMs to be added to"
-  validation {
-    condition     = var.outbound_endpoint_subnet_id == var.inbound_endpoint_subnet_id
-    error_message = "The inbound subnet and outbound subnet cannot be the same."
-  }
 }
 
 variable "resolver_name" {
