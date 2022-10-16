@@ -45,7 +45,13 @@ module "private_resolver" {
   resolver_name                      = "lbdo-dnspr-01"
   resolver_vnet_link_name            = "lbdo-dnspr-link"
   rule_set_name                      = "lbdo-dnspr-rule-set"
-  subnet_id                          = element(module.network.subnets_ids, 1)
-  target_dns_servers_info            = module.network.vnet_dns_servers
+  subnet_id                          = element(values(module.network.subnets_ids), 1)
   vnet_id                            = module.network.vnet_id
+
+  target_dns_servers_info = [
+    {
+      ipAddress = element(module.network.vnet_dns_servers, 0)
+      port      = 53
+    }
+  ]
 }
