@@ -101,6 +101,8 @@ resource "azapi_resource" "forwarding_rule" {
   type      = "Microsoft.Network/dnsForwardingRulesets/forwardingRules@2020-04-01-preview"
   name      = var.forwarding_rule_name
   parent_id = azapi_resource.rule_set.id
+  tags      = var.tags
+
 
   body = jsonencode({
     properties = {
