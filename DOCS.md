@@ -1,12 +1,14 @@
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | >= 1.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | n/a |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | >= 1.0.0 |
 
 ## Modules
 
@@ -16,12 +18,12 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azapi_resource.forwarding_rule](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azapi_resource.inbound_endpoint](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azapi_resource.outbound_endpoint](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azapi_resource.private_resolver](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azapi_resource.resolver_vnet_link](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
-| [azapi_resource.rule_set](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) | resource |
+| azapi_resource.forwarding_rule | resource |
+| azapi_resource.inbound_endpoint | resource |
+| azapi_resource.outbound_endpoint | resource |
+| azapi_resource.private_resolver | resource |
+| azapi_resource.resolver_vnet_link | resource |
+| azapi_resource.rule_set | resource |
 
 ## Inputs
 
