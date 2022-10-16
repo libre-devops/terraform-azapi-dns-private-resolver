@@ -50,7 +50,7 @@ module "private_resolver" {
 
   target_dns_servers_info = [
     {
-      ipAddress = element(module.network.vnet_dns_servers, 0)
+      ipAddress = "10.0.1.0"
       port      = 53
     }
   ]
