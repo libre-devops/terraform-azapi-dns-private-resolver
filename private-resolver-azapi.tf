@@ -26,7 +26,7 @@ resource "azapi_resource" "inbound_endpoint" {
 
   body = jsonencode({
     properties = {
-      ipConfigurations = [{ subnet = { id = var.subnet_id } }]
+      ipConfigurations = [{ subnet = { id = var.inbound_endpoint_subnet_id } }]
     }
   })
 
@@ -47,7 +47,7 @@ resource "azapi_resource" "outbound_endpoint" {
   body = jsonencode({
     properties = {
       subnet = {
-        id = var.subnet_id
+        id = var.outbound_endpoint_subnet_id
       }
     }
   })
