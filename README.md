@@ -54,24 +54,25 @@ module "private_resolver" {
   rg_id    = module.rg.rg_id
 
 
-  forwarding_rule_domain_name_target = "libredevops.org."
-  forwarding_rule_name               = "dnspr-fowarding-rule-example"
-  inbound_endpoint_name              = "dnspr-iep-example"
-  outbound_endpoint_name             = "dnspr-oep-example"
-  resolver_name                      = "lbdo-dnspr-01"
-  resolver_vnet_link_name            = "lbdo-dnspr-link"
-  rule_set_name                      = "lbdo-dnspr-rule-set"
-  inbound_endpoint_subnet_id         = element(values(module.network.subnets_ids), 1)
-  outbound_endpoint_subnet_id        = element(values(module.network.subnets_ids), 2)
-  vnet_id                            = module.network.vnet_id
+  inbound_endpoint_name       = "dnspr-iep-example"
+  outbound_endpoint_name      = "dnspr-oep-example"
+  resolver_name               = "lbdo-dnspr-01"
+  resolver_vnet_link_name     = "lbdo-dnspr-link"
+  rule_set_name               = "lbdo-dnspr-rule-set"
+  inbound_endpoint_subnet_id  = element(values(module.network.subnets_ids), 1)
+  outbound_endpoint_subnet_id = element(values(module.network.subnets_ids), 2)
+  vnet_id                     = module.network.vnet_id
 
-  target_dns_servers_info = [
+  forwarding_rule_name               = "dnspr-fowarding-rule-example"
+  forwarding_rule_domain_name_target = "libredevops.org."
+  forwarding_rule_domain_name_forwarding_dns_servers_info = [
     {
       ipAddress = "10.0.1.0"
       port      = 53
     }
   ]
 }
+
 ```
 ## Requirements
 
@@ -83,7 +84,7 @@ module "private_resolver" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | >= 1.0.0 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 1.0.0 |
 
 ## Modules
 
@@ -105,6 +106,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_enable_forwarding_rule_set"></a> [enable\_forwarding\_rule\_set](#input\_enable\_forwarding\_rule\_set) | Whether the forwarding rule resource should be created and enabled, defaults to true | `bool` | `true` | no |
+| <a name="input_forwarding_rule_domain_name_forwarding_dns_servers_info"></a> [forwarding\_rule\_domain\_name\_forwarding\_dns\_servers\_info](#input\_forwarding\_rule\_domain\_name\_forwarding\_dns\_servers\_info) | The object info for dns servers for the domain servers info, e.g. the domain you specify in your ruleset, if used. | <pre>list(object({<br>    ipAddress = string #Make these optional objects after TF 1.4.x<br>    port      = number<br>  }))</pre> | n/a | yes |
 | <a name="input_forwarding_rule_domain_name_target"></a> [forwarding\_rule\_domain\_name\_target](#input\_forwarding\_rule\_domain\_name\_target) | The name of the domain name the resolver is resolving for | `string` | n/a | yes |
 | <a name="input_forwarding_rule_name"></a> [forwarding\_rule\_name](#input\_forwarding\_rule\_name) | The name of the forwarding rule | `string` | n/a | yes |
 | <a name="input_inbound_endpoint_name"></a> [inbound\_endpoint\_name](#input\_inbound\_endpoint\_name) | The name of the inbound endpoint | `string` | n/a | yes |
@@ -118,7 +120,6 @@ No modules.
 | <a name="input_rg_name"></a> [rg\_name](#input\_rg\_name) | The name of the resource group, this module does not create a resource group, it is expecting the value of a resource group already exists | `string` | n/a | yes |
 | <a name="input_rule_set_name"></a> [rule\_set\_name](#input\_rule\_set\_name) | The name of the ruleset | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of the tags to use on the resources that are deployed with this module. | `map(string)` | <pre>{<br>  "source": "terraform"<br>}</pre> | no |
-| <a name="input_target_dns_servers_info"></a> [target\_dns\_servers\_info](#input\_target\_dns\_servers\_info) | n/a | <pre>list(object({<br>    ipAddress = string #Make these optional objects after TF 1.4.x<br>    port      = number<br>  }))</pre> | n/a | yes |
 | <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | ID of Vnet | `string` | n/a | yes |
 
 ## Outputs
@@ -126,4 +127,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_private_resolver_id"></a> [private\_resolver\_id](#output\_private\_resolver\_id) | The id of the resolver |
+| <a name="output_private_resolver_inbound_endpoint_name"></a> [private\_resolver\_inbound\_endpoint\_name](#output\_private\_resolver\_inbound\_endpoint\_name) | The name of the inbound endpoint |
 | <a name="output_private_resolver_name"></a> [private\_resolver\_name](#output\_private\_resolver\_name) | The name of the resolver |
+| <a name="output_private_resolver_parent_id"></a> [private\_resolver\_parent\_id](#output\_private\_resolver\_parent\_id) | The name of the parent\_id |

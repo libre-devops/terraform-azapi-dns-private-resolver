@@ -71,7 +71,3 @@ module "private_resolver" {
     }
   ]
 }
-
-output "module_output_1" {
-  value = module.private_resolver.test_output
-}
