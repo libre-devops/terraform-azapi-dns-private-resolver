@@ -30,12 +30,12 @@ module "network" {
   subnet_delegation = {
     "sn2-${module.network.vnet_name}" = {
       service_name    = "Microsoft.Network/dnsResolvers"
-      service_actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
     }
 
     "sn3-${module.network.vnet_name}" = {
       service_name    = "Microsoft.Network/dnsResolvers"
-      service_actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
     }
   }
 }
