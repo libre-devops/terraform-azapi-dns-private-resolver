@@ -30,6 +30,9 @@ module "network" {
 
 
 module "private_resolver" {
+  providers = {
+    azapi = azapi
+  }
   source = "registry.terraform.io/libre-devops/dns-private-resolver/azapi"
 
   rg_name  = module.rg.rg_name // rg-ldo-euw-dev-build
