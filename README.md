@@ -8,15 +8,6 @@ module "rg" {
 
   #  lock_level = "CanNotDelete" // Do not set this value to skip lock
 }
-module "rg" {
-  source = "registry.terraform.io/libre-devops/rg/azurerm"
-
-  rg_name  = "rg-${var.short}-${var.loc}-${terraform.workspace}-build" // rg-ldo-euw-dev-build
-  location = local.location                                            // compares var.loc with the var.regions var to match a long-hand name, in this case, "euw", so "westeurope"
-  tags     = local.tags
-
-  #  lock_level = "CanNotDelete" // Do not set this value to skip lock
-}
 
 module "network" {
   source = "registry.terraform.io/libre-devops/network/azurerm"
@@ -40,15 +31,15 @@ module "network" {
   subnet_delegation = {
     "sn2-${module.network.vnet_name}" = {
       "Microsoft.Network/dnsResolvers" = {
-        service_name    = "Microsoft.Network/dnsResolvers" #Subnets for inbound and outbound endpoints Azure Private DNS Resolver require delegation
-        service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
+        service_name    = "Microsoft.Network/dnsResolvers"
+        service_actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
       }
     }
 
     "sn3-${module.network.vnet_name}" = {
       "Microsoft.Network/dnsResolvers" = {
-        service_name    = "Microsoft.Network/dnsResolvers" #Subnets for inbound and outbound endpoints Azure Private DNS Resolver require delegation
-        service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
+        service_name    = "Microsoft.Network/dnsResolvers"
+        service_actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
       }
     }
   }
@@ -63,7 +54,7 @@ module "private_resolver" {
   rg_id    = module.rg.rg_id
 
 
-  forwarding_rule_domain_name_target = "libredevops.org." #Must have trailing dot
+  forwarding_rule_domain_name_target = "libredevops.org."
   forwarding_rule_name               = "dnspr-fowarding-rule-example"
   inbound_endpoint_name              = "dnspr-iep-example"
   outbound_endpoint_name             = "dnspr-oep-example"
