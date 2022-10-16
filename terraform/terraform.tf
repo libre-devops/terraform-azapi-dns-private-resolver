@@ -6,6 +6,9 @@ terraform {
       #      configuration_aliases = [azurerm.default-provider]
       #      version = "~> 2.68.0"
     }
+    azapi = {
+      source = "azure/azapi"
+    }
   }
   backend "azurerm" {
   }
