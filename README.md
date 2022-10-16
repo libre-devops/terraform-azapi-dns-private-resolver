@@ -40,14 +40,14 @@ module "network" {
   subnet_delegation = {
     "sn2-${module.network.vnet_name}" = {
       "Microsoft.Network/dnsResolvers" = {
-        service_name    = "Microsoft.Network/dnsResolvers"
+        service_name    = "Microsoft.Network/dnsResolvers" #Subnets for inbound and outbound endpoints Azure Private DNS Resolver require delegation
         service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
       }
     }
 
     "sn3-${module.network.vnet_name}" = {
       "Microsoft.Network/dnsResolvers" = {
-        service_name    = "Microsoft.Network/dnsResolvers"
+        service_name    = "Microsoft.Network/dnsResolvers" #Subnets for inbound and outbound endpoints Azure Private DNS Resolver require delegation
         service_actions = "Microsoft.Network/virtualNetworks/subnets/join/action"
       }
     }
@@ -63,7 +63,7 @@ module "private_resolver" {
   rg_id    = module.rg.rg_id
 
 
-  forwarding_rule_domain_name_target = "libredevops.org."
+  forwarding_rule_domain_name_target = "libredevops.org." #Must have trailing dot
   forwarding_rule_name               = "dnspr-fowarding-rule-example"
   inbound_endpoint_name              = "dnspr-iep-example"
   outbound_endpoint_name             = "dnspr-oep-example"
