@@ -37,7 +37,7 @@ module "private_resolver" {
   rg_id    = module.rg.rg_id
 
 
-  forwarding_rule_domain_name_target = "libredevops.org"
+  forwarding_rule_domain_name_target = "libredevops.org."
   forwarding_rule_name               = "dnspr-fowarding-rule-example"
   inbound_endpoint_name              = "dnspr-iep-example"
   outbound_endpoint_name             = "dnspr-oep-example"
