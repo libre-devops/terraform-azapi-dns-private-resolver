@@ -42,140 +42,27 @@ module "network" {
   }
 }
 
-module "lnx_vm_simple" {
-  source = "registry.terraform.io/libre-devops/linux-vm/azurerm"
 
-  rg_name  = module.rg.rg_name
+module "private_resolver" {
+  source = "registry.terraform.io/libre-devops/dns-private-resolver/azapi"
+
+  rg_name  = module.rg.rg_name // rg-ldo-euw-dev-build
   location = module.rg.rg_location
+  tags     = local.tags
+  rg_id    = module.rg.rg_id
 
-  vm_amount          = 1
-  vm_hostname        = "lnx${var.short}${var.loc}${terraform.workspace}"
-  vm_size            = "Standard_B2ms"
-  vm_os_simple       = "Ubuntu20.04"
-  vm_os_disk_size_gb = "127"
 
-  asg_name = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_simple.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-
-  admin_username = "LibreDevOpsAdmin"
-  admin_password = data.azurerm_key_vault_secret.mgmt_local_admin_pwd.value
-  ssh_public_key = data.azurerm_ssh_public_key.mgmt_ssh_key.public_key
-
-  subnet_id            = element(values(module.network.subnets_ids), 0)
-  availability_zone    = "alternate"
-  storage_account_type = "Standard_LRS"
-  identity_type        = "SystemAssigned"
-
-  tags = module.rg.rg_tags
+  forwarding_rule_domain_name_target = "libredevops.org"
+  forwarding_rule_name               = "dnspr-fowarding-rule-example"
+  inbound_endpoint_name              = "dnspr-iep-example"
+  outbound_endpoint_name             = "dnspr-oep-example"
+  resolver_name                      = "lbdo-dnspr-01"
+  resolver_vnet_link_name            = "lbdo-dnspr-link"
+  rule_set_name                      = "lbdo-dnspr-rule-set"
+  subnet_id                          = element(module.network.subnets_ids, 1)
+  target_dns_servers_info            = module.network.vnet_dns_servers
+  vnet_id                            = module.network.vnet_id
 }
-
-// Want to use this module without the SKU calculator? Try something like this:
-module "lnx_vm_with_custom_image" {
-  source = "registry.terraform.io/libre-devops/linux-vm/azurerm"
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.rg_location
-  tags     = module.rg.rg_tags
-
-  vm_amount   = 1
-  vm_hostname = "vm${var.short}${var.loc}${terraform.workspace}" // vmldoeuwdev01
-  vm_size     = "Standard_B2ms"
-
-  use_simple_image = false
-  source_image_reference = {
-    publisher = "Oracle"
-    offer     = "Oracle-Linux"
-    sku       = "ol82"
-    version   = "latest"
-  }
-
-  vm_os_disk_size_gb = "127"
-
-  asg_name = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_with_custom_image.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-
-  admin_username = "LibreDevOpsAdmin"
-  admin_password = data.azurerm_key_vault_secret.mgmt_local_admin_pwd.value
-  ssh_public_key = data.azurerm_ssh_public_key.mgmt_ssh_key.public_key
-
-  subnet_id            = element(values(module.network.subnets_ids), 0) // Places in sn1-vnet-ldo-euw-dev-01
-  availability_zone    = "alternate"                                    // If more than 1 VM exists, places them in alterate zones, 1, 2, 3 then resetting.  If you want HA, use an availability set.
-  storage_account_type = "Standard_LRS"
-  identity_type        = "UserAssigned"
-  identity_ids         = [data.azurerm_user_assigned_identity.mgmt_user_assigned_id.id]
-}
-
-// Sometimes you may want an image like the CIS images, these are part of a plan rather than the platform images.  You can use the ""registry.terraform.io/libre-devops/windows-os-plan-with-plan-calculator/azurerm""
-module "lnx_vm_with_plan" {
-  source = "registry.terraform.io/libre-devops/linux-vm/azurerm"
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.rg_location
-  tags     = module.rg.rg_tags
-
-  vm_amount   = 1
-  vm_hostname = "jmp${var.short}${var.loc}${terraform.workspace}" // vmldoeuwdev01
-  vm_size     = "Standard_B2ms"
-
-  use_simple_image_with_plan = true
-  vm_os_simple               = "CISDebian10L1"
-
-  vm_os_disk_size_gb = "127"
-
-  asg_name = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_with_plan.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-
-  admin_username = "LibreDevOpsAdmin"
-  admin_password = data.azurerm_key_vault_secret.mgmt_local_admin_pwd.value
-  ssh_public_key = data.azurerm_ssh_public_key.mgmt_ssh_key.public_key
-
-  subnet_id            = element(values(module.network.subnets_ids), 0) // Places in sn1-vnet-ldo-euw-dev-01
-  availability_zone    = "alternate"                                    // If more than 1 VM exists, places them in alterate zones, 1, 2, 3 then resetting.  If you want HA, use an availability set.
-  storage_account_type = "Standard_LRS"
-  identity_type        = "UserAssigned"
-  identity_ids         = [data.azurerm_user_assigned_identity.mgmt_user_assigned_id.id]
-}
-
-// Don't want to use either? No problem.  Try this:
-module "lnx_vm_with_custom_plan" {
-  source = "registry.terraform.io/libre-devops/linux-vm/azurerm"
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.rg_location
-  tags     = module.rg.rg_tags
-
-  vm_amount   = 1
-  vm_hostname = "app${var.short}${var.loc}${terraform.workspace}" // appldoeuwdev01
-  vm_size     = "Standard_B2ms"
-
-  use_simple_image           = false
-  use_simple_image_with_plan = false
-
-  source_image_reference = {
-    publisher = "center-for-internet-security-inc"
-    offer     = "cis-centos-7-v2-1-1-l1"
-    sku       = "cis-centos7-l1"
-    version   = "latest"
-  }
-
-  plan = {
-    name      = "cis-centos7-l1"
-    product   = "cis-centos-7-v2-1-1-l1"
-    publisher = "center-for-internet-security-inc"
-  }
-
-  vm_os_disk_size_gb = "127"
-
-  asg_name = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_with_custom_plan.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-
-  admin_username = "LibreDevOpsAdmin"
-  admin_password = data.azurerm_key_vault_secret.mgmt_local_admin_pwd.value
-  ssh_public_key = data.azurerm_ssh_public_key.mgmt_ssh_key.public_key
-
-  subnet_id            = element(values(module.network.subnets_ids), 0) // Places in sn1-vnet-ldo-euw-dev-01
-  availability_zone    = "alternate"                                    // If more than 1 VM exists, places them in alterate zones, 1, 2, 3 then resetting.  If you want HA, use an availability set.
-  storage_account_type = "Standard_LRS"
-  identity_type        = "UserAssigned"
-  identity_ids         = [data.azurerm_user_assigned_identity.mgmt_user_assigned_id.id]
-}
-
 ```
 
 For a full example build, check out the [Libre DevOps Website](https://www.libredevops.org/quickstart/utils/terraform/using-lbdo-tf-modules-example.html)
