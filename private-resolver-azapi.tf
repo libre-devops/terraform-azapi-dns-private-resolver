@@ -3,6 +3,7 @@ resource "azapi_resource" "private_resolver" {
   name      = var.resolver_name
   parent_id = var.rg_id
   location  = var.location
+  tags      = var.tags
 
   body = jsonencode({
     properties = {
@@ -20,6 +21,8 @@ resource "azapi_resource" "inbound_endpoint" {
   name      = var.inbound_endpoint_name
   parent_id = azapi_resource.private_resolver.id
   location  = azapi_resource.private_resolver.location
+  tags      = var.tags
+
 
   body = jsonencode({
     properties = {
@@ -38,6 +41,8 @@ resource "azapi_resource" "outbound_endpoint" {
   name      = var.outbound_endpoint_name
   parent_id = azapi_resource.private_resolver.id
   location  = azapi_resource.private_resolver.location
+  tags      = var.tags
+
 
   body = jsonencode({
     properties = {
@@ -76,6 +81,8 @@ resource "azapi_resource" "resolver_vnet_link" {
   type      = "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks@2020-04-01-preview"
   name      = var.resolver_vnet_link_name
   parent_id = azapi_resource.rule_set.id
+  tags      = var.tags
+
 
   body = jsonencode({
     properties = {
@@ -94,6 +101,8 @@ resource "azapi_resource" "forwarding_rule" {
   type      = "Microsoft.Network/dnsForwardingRulesets/forwardingRules@2020-04-01-preview"
   name      = var.forwarding_rule_name
   parent_id = azapi_resource.rule_set.id
+  tags      = var.tags
+
 
   body = jsonencode({
     properties = {
